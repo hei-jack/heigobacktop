@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>图片画廊(固定宽度)</title>
+		<style>
+		p{text-align:center;font-size:20px;}
+			#go-test {
+				display: none;
+				position: fixed;
+				width: 100px;
+				height: 30px;
+				top: 90%;
+				left: 50px;
+				z-index: 9999;
+				overflow: hidden;
+				background-color: #6495ED;
+				border: none;
+				border-radius: 5px;
+				color: #fff;
+				outline: none;
+				text-align: center;
+				line-height: 30px;
+			}
+
+			#go-test:hover {
+				background-color: #0000FF;
+			}
+		</style>
+	</head>
+	<body>
+	    <p style="color:red;">Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p style="color:green;">You are a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p>Jack is a handsome boy.</p>
+		<p style="color:blue;">Jack is a handsome boy.</p>
+		<div id="go-test">
+          上来呀
+		</div>
+		<script src="../src/heigotoback.js"></script>
+		<script>
+			let hello = new HeiGoBackTop(3);
+			hello.onBeforeCreate(function(){
+				console.log('我要创建了');
+			});
+			hello.onShow(function(){
+              console.log('我要展示了');
+			});
+			hello.onHide(function(){
+              console.log('我要隐藏了');
+			});
+			
+			hello.onScroll(function(){
+              console.log('我要滑动了');
+			});
+
+			hello.onAfterCreate(function(){
+              console.log('我创建结束了');
+			});
+
+			hello.onScrollOver(function(){
+				console.log('我滑完了，该你了');
+			});
+		</script>
+	</body>
+</html>
