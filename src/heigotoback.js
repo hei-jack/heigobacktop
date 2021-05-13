@@ -1,10 +1,11 @@
 /*
  * HeiGoBackTop.js V1.0.0
  * @author hei-jack
- * @link https://github.com/hei-jack/HeiGoBackTop.js/
+ * @link https://github.com/hei-jack/HeiGoBackTop/
  * Probably the most beautiful back to top widget
  * 可能是最漂亮的返回顶部小插件
- * 
+ * GMT2021-05-13
+ *
  */
 ; (function(global) {
 	"use strict";
@@ -27,7 +28,7 @@
 		this.color = 'linear-gradient(to right,#6966ff,#37e2d3,#63e8dd,#ccff66)';
 		this.shadow = '0 4px 15px 0 rgba(41, 163, 163,0.75)';
 		this.version = 'V1.0.0';
-		this.home = 'http://www.baidu.com';
+		this.home = 'https://github.com/hei-jack/HeiGoBackTop/';
 		this.onLoad(this)
 	};
 	HeiGoBackTop.prototype = {
