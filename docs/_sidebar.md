@@ -4,3 +4,7 @@
 * [Select Mode](/selectmode "Select mode, HeiGoBackTop is more than just returning to the top")
 * [Built-in Event](/event "Built-in Event,The unknown side of HeiGoBackTop")
 * [Configuration](configuration "configuration,All parameters and event descriptions of HeiGoBackTop")
+
+* [More](/more)
+
+* [Changelog](/zh-cn/changelog)

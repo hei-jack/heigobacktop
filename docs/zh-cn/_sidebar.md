@@ -4,3 +4,8 @@
 * [选择模式](/zh-cn/selectmode "选择模式 HeiGoBackTop不止于返回顶部")
 * [内置事件](/zh-cn/event "内置事件 HeiGoBackTop不为人知的另一面")
 * [配置项](/zh-cn/configuration "配置项 HeiGoBackTop 所有的参数和事件说明")
+
+* [更多用法](/zh-cn/more)
+
+* [更新日志](/zh-cn/changelog)
+
