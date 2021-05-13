@@ -47,5 +47,27 @@
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+  <script src="//cdn.jsdelivr.net/gh/hei-jack/heigobacktop@V1.0.0/dist/heigotoback.min.js"></script>
+  <script>
+  let hgbt = new HeiGoBackTop();
+   hgbt.onBeforeCreate(function(){
+     this.mode = Math.round(Math.random() * 3);
+	 switch (this.mode) {
+			case 0:
+				this.text = '返回顶部';
+				break;
+			case 1:
+				this.text = '跳转页尾';
+				break;
+			case 2:
+				this.text = '慢滑到顶部';
+				break;
+			case 3:
+				this.text = '慢滑到页尾';
+			}
+	 this.themes = Math.round(Math.random() * 11);
+	 this.show_height = 150;
+   });
+  </script>
 </body>
 </html>
