@@ -34,6 +34,8 @@ HeiGoBackTop是一款不止于返回顶部插件，与传统的返回顶部插�
 
 博客、ui设计网站等你决定把它变得很酷的地方~
 
+当我把演示代码和`docsify`结合时，我发现也特别适合，也许你也可以试试。
+
 ## 反馈bug
 
 直接到仓库[issues](https://github.com/hei-jack/heigobacktop/issues)反馈即可。
