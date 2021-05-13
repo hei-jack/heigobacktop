@@ -27,8 +27,9 @@ If you like and want to use this plugin, you can read [Usage Document](https://h
 
 ## Part of the theme display
 
-<img src="//z3.ax1x.com/2021/05/13/gBFx0g.gif" alt="gBFx0g.gif" border="0" alt="Default theme" title="Default theme">
-<img src="//z3.ax1x.com/2021/05/13/gBFvnS.gif" alt="gBFvnS.gif" border="0" alt="Theme display" title="Theme display">
+<img src="https://z3.ax1x.com/2021/05/13/gBFvnS.gif" border="0" alt="Theme display" title="Default theme">
+<img src="https://z3.ax1x.com/2021/05/13/gBFx0g.gif" border="0" alt="Default theme" title="Theme display">
+
 
 Like the beautiful themes above, HeiGoBackTop has built-in `12` styles.
 

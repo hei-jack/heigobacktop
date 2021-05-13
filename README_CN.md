@@ -25,8 +25,9 @@ HeiGoBackTop是一款不止于返回顶部插件，与传统的返回顶部插�
 
 ## 部分主题展示
 
-<img src="//z3.ax1x.com/2021/05/13/gBFx0g.gif" alt="gBFx0g.gif" border="0" alt="默认主题" title="默认主题">
-<img src="//z3.ax1x.com/2021/05/13/gBFvnS.gif" alt="gBFvnS.gif" border="0" alt="主题展示" title="主题展示">
+<img src="https://z3.ax1x.com/2021/05/13/gBFvnS.gif"  border="0" alt="默认主题" title="默认主题">
+<img src="https://z3.ax1x.com/2021/05/13/gBFx0g.gif"  border="0" alt="主题展示" title="主题展示">
+
 
 像上面这么漂亮的主题，HeiGoBackTop内置了`12`款。
 
