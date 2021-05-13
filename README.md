@@ -2,7 +2,7 @@
 
 > Probably the most beautiful back to top widget.
 
-中文README.MD请[点击](#https://github.com/hei-jack/heigobacktop/blob/master/README_CN.md)我
+中文README.MD请[点击](https://github.com/hei-jack/heigobacktop/blob/master/README_CN.md)我
 
 This document uses Google Translate. If it is inaccurate or missed, you can tell me.
 
