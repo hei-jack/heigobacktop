@@ -29,7 +29,7 @@ HeiGoBackTop是一款不止于返回顶部插件，与传统的返回顶部插�
 <img src="https://z3.ax1x.com/2021/05/13/gBFx0g.gif"  border="0" alt="主题展示" title="主题展示">
 
 
-像上面这么漂亮的主题，HeiGoBackTop内置了`12`款。
+像上面这么漂亮的主题，HeiGoBackTop内置了`12`款，[点击我](https://hei-jack.github.io/heigobacktop/#/zh-cn/)前往体验更多。
 
 ## 推荐使用场景
 

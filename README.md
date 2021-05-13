@@ -31,7 +31,7 @@ If you like and want to use this plugin, you can read [Usage Document](https://h
 <img src="https://z3.ax1x.com/2021/05/13/gBFx0g.gif" border="0" alt="Default theme" title="Theme display">
 
 
-Like the beautiful themes above, HeiGoBackTop has built-in `12` styles.
+Like the beautiful themes above, HeiGoBackTop has built-in `12` styles, , [Click me](https://hei-jack.github.io/heigobacktop/#/zh-cn/) to experience more.
 
 ## Recommended usage scenarios
 
