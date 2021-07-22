@@ -17,9 +17,9 @@ let example = new HeiGoBackTop();
 
 ## 备用下载地址
 
-[备用地址](https://cdn.jsdelivr.net/gh/hei-jack/heigobacktop@V1.0.0/dist/heigotoback.min.js)
+[备用地址](https://cdn.jsdelivr.net/gh/hei-jack/heigobacktop@V1.0.1/dist/heigobacktop.min.js)
 
-`https://cdn.jsdelivr.net/gh/hei-jack/heigobacktop@V1.0.0/dist/heigotoback.min.js`
+`https://cdn.jsdelivr.net/gh/hei-jack/heigobacktop@V1.0.1/dist/heigobacktop.min.js`
 
 ## 克隆到本地仓库
 
@@ -30,5 +30,5 @@ git clone https://github.com/hei-jack/heigobacktop.git
 ## cdn
 
 ```html
-<script src="//cdn.jsdelivr.net/gh/hei-jack/heigobacktop@V1.0.0/dist/heigotoback.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/hei-jack/heigobacktop@V1.0.1/dist/heigobacktop.min.js"></script>
 ```
