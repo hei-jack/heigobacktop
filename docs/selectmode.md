@@ -40,3 +40,49 @@ example.onBeforeCreate(function(){
 After the user clicks, it will slowly slide to the bottom of the page according to the set speed and sliding distance.
 
 Just change the example of slow sliding to the top `2` to `3`.
+
+## Top and bottom mode switching
+
+After the release of HeiGoBackTop, someone suggested that it would be better if it can automatically identify whether it is to jump to the top or bottom of the page.
+
+I'm lazy, I don't want to move for the time being. Now I will provide a simple implementation plan. When more people really have this need, I will consider implementing it in future version changes.
+
+The plan is as follows:
+
+```javascript
+var hello = new HeiGoBackTop();
+//在创建之前执行
+hello.onBeforeCreate(function() {
+	//劫持原来的binOn方法 方便将按钮的点击事件注册为一次性临时事件
+	this.bindOn = function(el, event, func) {
+		if (func === undefined) return false;
+		this.register(el, event, func); //bind方法改变this指向 否则绑定全局事件时会指向window全局对象
+	};
+
+	//新增register绑定方法 如果绑定的是按钮 就注册为一次性临时事件
+	this.register = function(el, event, func) {
+		if (el === this.btn) {
+			//如果是按钮注册事件
+			var that = this; //改变this指向
+			el.addEventListener(event,function handler() {
+				func.apply(that, arguments);
+				el.removeEventListener(event, handler, false);
+			},false);
+			return true;
+		}
+		this.addEventListener(el, event, func.bind(this));
+	};
+    
+    this.show_height = 0;
+});
+
+//在滑动到页面底部或者顶部时执行
+hello.onScrollOver(function() {
+    //判断是页面顶部还是底部
+	var flag = this.getScrollTop() === 0;
+	var text = flag ? '返回底部': '返回顶部';
+    //注册一次性事件
+	flag ? this.register(this.btn, "click", this.goDown) : this.register(this.btn, "click", this.goBackTop);     //更改对应文本
+	this.btn.getElementsByTagName('button')[0].textContent = text;
+});
+```

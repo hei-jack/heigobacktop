@@ -40,3 +40,50 @@ example.onBeforeCreate(function(){
 用户点击之后，将会根据设置的速度和滑动距离慢慢滑动到页面底部。
 
 只需将慢滑到顶部的示例`2`改为`3`即可。
+
+## 顶部和底部模式切换
+
+HeiGoBackTop发布以后，有人建议，如果能自动识别是跳转页面顶部还是底部就更好了。
+
+比较懒，暂时不想动了，现在先提供一个简陋的实现方案，等真正有这个需求的人多起来之后会考虑在以后的版本更迭中实现。
+
+方案如下:
+
+```javascript
+var hello = new HeiGoBackTop();
+//在创建之前执行
+hello.onBeforeCreate(function() {
+	//劫持原来的binOn方法 方便将按钮的点击事件注册为一次性临时事件
+	this.bindOn = function(el, event, func) {
+		if (func === undefined) return false;
+		this.register(el, event, func); //bind方法改变this指向 否则绑定全局事件时会指向window全局对象
+	};
+
+	//新增register绑定方法 如果绑定的是按钮 就注册为一次性临时事件
+	this.register = function(el, event, func) {
+		if (el === this.btn) {
+			//如果是按钮注册事件
+			var that = this; //改变this指向
+			el.addEventListener(event,function handler() {
+				func.apply(that, arguments);
+				el.removeEventListener(event, handler, false);
+			},false);
+			return true;
+		}
+		this.addEventListener(el, event, func.bind(this));
+	};
+    
+    this.show_height = 0;
+});
+
+//在滑动到页面底部或者顶部时执行
+hello.onScrollOver(function() {
+    //判断是页面顶部还是底部
+	var flag = this.getScrollTop() === 0;
+	var text = flag ? '返回底部': '返回顶部';
+    //注册一次性事件
+	flag ? this.register(this.btn, "click", this.goDown) : this.register(this.btn, "click", this.goBackTop);     //更改对应文本
+	this.btn.getElementsByTagName('button')[0].textContent = text;
+});
+```
+
