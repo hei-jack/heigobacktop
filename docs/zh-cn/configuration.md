@@ -42,6 +42,14 @@ HeiGoBackTop初始化时挂载元素。
 
 滚动距离，每次滚动的距离。只有在`2慢滑到顶部 3慢滑到底部模式时生效`。
 
+### smooth
+
+参数类型 `bool`
+
+默认值`true`
+
+平滑的滚动到顶部或者底部，默认打开，`0 和 1 模式生效`.
+
 ## 属性
 
 列出的所有属性，都建议在[onBeforeCreate](#onBeforeCreate(callBack))事件更改。
