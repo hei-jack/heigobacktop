@@ -6,7 +6,7 @@ All the parameters and events of HeiGoBackTop are here, so you can play to your 
 
 The initialization parameters can be replaced when HeiGoBackTop is instantiated.
 
-`HeiGoBackTop(mode,el,speed,distance);`
+`HeiGoBackTop(mode,el,speed,distance,smooth);`
 
 ### mode
 
@@ -41,6 +41,14 @@ type`int`
 defaults`100`
 
 The distance of each scroll. the interval between milliseconds to start scrolling. It only takes effect when `2Slow slide to the top 3Slow to the bottom mode`.
+
+### smooth
+
+type `bool`
+
+defaults`true`
+
+Smooth return to the top or bottom, which is on by default.`0 and 1` modes in effect.
 
 ## Attributes
 
