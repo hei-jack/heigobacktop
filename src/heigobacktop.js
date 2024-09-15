@@ -4,7 +4,7 @@
  * @link https://github.com/hei-jack/HeiGoBackTop/
  * Probably the most beautiful back to top widget
  * 可能是最漂亮的返回顶部小插件
- * start: GMT2021-07-22
+ * first: GMT2021-07-22
  * update: GMT2024-09-15
  *
  */
