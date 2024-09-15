@@ -1,5 +1,5 @@
 /*
- * HeiGoBackTop.js V1.0.1
+ * HeiGoBackTop.js V1.0.2
  * @author hei-jack
  * @link https://github.com/hei-jack/HeiGoBackTop/
  * Probably the most beautiful back to top widget
