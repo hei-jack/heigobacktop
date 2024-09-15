@@ -30,7 +30,7 @@
     this.themes = 0;
     this.color = 'linear-gradient(to right,#6966ff,#37e2d3,#63e8dd,#ccff66)';
     this.shadow = '0 4px 15px 0 rgba(41, 163, 163,0.75)';
-    this.version = 'V1.0.1';
+    this.version = 'V1.0.3';
     this.home = 'https://github.com/hei-jack/HeiGoBackTop/';
     //页面加载结束才进行初始化 没有必要执行实时载入
     this.onLoad(this);
