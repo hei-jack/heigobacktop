@@ -1,6 +1,6 @@
 <img src="https://z3.ax1x.com/2021/05/13/gBJiXF.png" alt="LOGO" border="0" style="width:150px;"  />
 
-# HeiGoBackTop <small>1.0.1</small>
+# HeiGoBackTop <small>1.0.2</small>
 
 > Probably the most beautiful back to top widget.
 
