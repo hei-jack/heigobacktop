@@ -88,6 +88,18 @@ defaults`90%`
 
 Specifies the distance from the display of the button to the top of the browser. The value can refer to the `css top` property value.
 
+`Applicable to V1.0.2 and below`top
+
+### bottom
+
+type`string`
+
+defaults`5%`
+
+Specifies the distance from the display of the button to the bottom of the browser. The value can refer to the `css bottom` property value.
+
+`Applicable to V1.0.3 and below`
+
 ### right
 
 type`string`
