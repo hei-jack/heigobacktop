@@ -1,5 +1,5 @@
 /*
- * HeiGoBackTop.js V1.0.2
+ * HeiGoBackTop.js V1.0.3
  * @author hei-jack
  * @link https://github.com/hei-jack/HeiGoBackTop/
  * Probably the most beautiful back to top widget
@@ -14,6 +14,7 @@
   function HeiGoBackTop(mode, el, speed, distance, smooth) {
     this.mode = mode === undefined ? 0 : mode;
     this.el = el === undefined ? '#__go-back-top' : el;
+    this.iframe = null;
     this.speed = speed === undefined ? 500 : speed;
     this.distance = distance === undefined ? 100 : distance;
     this.smooth = smooth === undefined ? true : smooth;
@@ -22,7 +23,7 @@
     this.show_flag = false;
     this.width = '150px';
     this.height = '40px';
-    this.top = '90%';
+    this.bottom = '5%';
     this.right = '5%';
     this.text = '返回顶部';
     this.text_color = '#fff';
@@ -30,7 +31,7 @@
     this.themes = 0;
     this.color = 'linear-gradient(to right,#6966ff,#37e2d3,#63e8dd,#ccff66)';
     this.shadow = '0 4px 15px 0 rgba(41, 163, 163,0.75)';
-    this.version = 'V1.0.2';
+    this.version = 'V1.0.3';
     this.home = 'https://github.com/hei-jack/HeiGoBackTop/';
     //页面加载结束才进行初始化 没有必要执行实时载入
     this.onLoad(this);
@@ -122,11 +123,31 @@
         //挂载元素id没有发现 直接抛出错误
         throw (new Error('element is error!'));
       }
-      var style_text = '#__go-back-top{display:none;position:fixed;width:' + this.width + ';height:' + this.height + ';top:' + this.top + ';right:' + this.right + ';z-index:9999;}.__go-back-btn{width:' + this.width + ';height:' + this.height + ';background:' + this.color + ';background-size: 300% 100%;cursor: pointer;border:none;border-radius:' + this.radius + ';box-shadow:' + this.shadow + ';color:' + this.text_color + ';outline:none;letter-spacing:2px;font-weight:600;font-family: "YouYuan","Microsoft YaHei","SimHei","SimSun","Arial",sans-serif;transition: all .4s ease-in-out;moz-transition: all .4s ease-in-out;-o-transition: all .4s ease-in-out;-webkit-transition: all .4s ease-in-out;}.__go-back-btn:hover{background-position: 100% 0%;moz-transition: all .4s ease-in-out;-o-transition: all .4s ease-in-out;-webkit-transition: all .4s ease-in-out;transition: all .4s ease-in-out;}.__go-back-btn:focus{border:none;outline:none;}.go-back-top-themes1{background-image:linear-gradient(to right,#25aae1,#40e495,#30dd8a,#2bb673);box-shadow:0 4px 15px 0 rgba(49,196,190,0.75);}.go-back-top-themes2{background-image:linear-gradient(to right,#f5ce62,#e43603,#fa7199,#e85a19);box-shadow:0 4px 15px 0 rgba(229,66,10,0.75);}.go-back-top-themes3{background-image:linear-gradient(to right,#667eea,#764ba2,#6B8DD6,#8E37D7);box-shadow:0 4px 15px 0 rgba(116,79,168,0.75);}.go-back-top-themes4{background-image:linear-gradient(to right,#fc6076,#ff9a44,#ef9d43,#e75516);box-shadow:0 4px 15px 0 rgba(252,104,110,0.75);}.go-back-top-themes5{background-image:linear-gradient(to right,#0ba360,#3cba92,#30dd8a,#2bb673);box-shadow:0 4px 15px 0 rgba(23,168,108,0.75);}.go-back-top-themes6{background-image:linear-gradient(to right,#009245,#FCEE21,#00A8C5,#D9E021);box-shadow:0 4px 15px 0 rgba(83,176,57,0.75);}.go-back-top-themes7{background-image:linear-gradient(to right,#6253e1,#852D91,#A3A1FF,#F24645);box-shadow:0 4px 15px 0 rgba(126,52,161,0.75);}.go-back-top-themes8{background-image:linear-gradient(to right,#29323c,#485563,#2b5876,#4e4376);box-shadow:0 4px 15px 0 rgba(45,54,65,0.75);}.go-back-top-themes9{background-image:linear-gradient(to right,#25aae1,#4481eb,#04befe,#3f86ed);box-shadow:0 4px 15px 0 rgba(65,132,234,0.75);}.go-back-top-themes10{background-image:linear-gradient(to right,#ed6ea0,#ec8c69,#f7186a,#FBB03B);box-shadow:0 4px 15px 0 rgba(236,116,149,0.75);}.go-back-top-themes11{background-image:linear-gradient(to right,#eb3941,#f15e64,#e14e53,#e2373f);box-shadow:0 5px 15px rgba(242,97,103,.4);}';
+
+      var iframeW = parseInt(this.width.replace("px", "")) + 20;
+      var iframeH = parseInt(this.height.replace("px", "")) + 40;
+
+      var style_text = '#__go-back-top{display:none;position:fixed;width:' + iframeW + 'px;height:' + iframeH + 'px;bottom:' + this.bottom + ';right:' + this.right + ';z-index:2147483647;border:0;outline:0;background: transparent;}';
       var style_el = document.createElement('style');
       var style_node = document.createTextNode(style_text);
       style_el.appendChild(style_node);
       document.body.appendChild(style_el);
+
+      var iframe = document.createElement('iframe');
+      iframe.setAttribute('id', this.el.replace('#', ''));
+      iframe.src = 'about:blank';
+      iframe.frameborder = "0";
+      iframe.allowtransparency = "true";
+      document.body.appendChild(iframe);
+      this.iframe = iframe;
+      var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+      var style_text_btn = 'html,body{padding:0;margin:0;background:transparent;}#__go-back-top{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;align-content:center;background:transparent;}.__go-back-btn{width:' + this.width + ';height:' + this.height + ';background:' + this.color + ';background-size: 300% 100%;cursor: pointer;border:none;border-radius:' + this.radius + ';box-shadow:' + this.shadow + ';color:' + this.text_color + ';outline:none;letter-spacing:2px;font-weight:600;font-family: "YouYuan","Microsoft YaHei","SimHei","SimSun","Arial",sans-serif;transition: all .4s ease-in-out;moz-transition: all .4s ease-in-out;-o-transition: all .4s ease-in-out;-webkit-transition: all .4s ease-in-out;}.__go-back-btn:hover{background-position: 100% 0%;moz-transition: all .4s ease-in-out;-o-transition: all .4s ease-in-out;-webkit-transition: all .4s ease-in-out;transition: all .4s ease-in-out;}.__go-back-btn:focus{border:none;outline:none;}.go-back-top-themes1{background-image:linear-gradient(to right,#25aae1,#40e495,#30dd8a,#2bb673);box-shadow:0 4px 15px 0 rgba(49,196,190,0.75);}.go-back-top-themes2{background-image:linear-gradient(to right,#f5ce62,#e43603,#fa7199,#e85a19);box-shadow:0 4px 15px 0 rgba(229,66,10,0.75);}.go-back-top-themes3{background-image:linear-gradient(to right,#667eea,#764ba2,#6B8DD6,#8E37D7);box-shadow:0 4px 15px 0 rgba(116,79,168,0.75);}.go-back-top-themes4{background-image:linear-gradient(to right,#fc6076,#ff9a44,#ef9d43,#e75516);box-shadow:0 4px 15px 0 rgba(252,104,110,0.75);}.go-back-top-themes5{background-image:linear-gradient(to right,#0ba360,#3cba92,#30dd8a,#2bb673);box-shadow:0 4px 15px 0 rgba(23,168,108,0.75);}.go-back-top-themes6{background-image:linear-gradient(to right,#009245,#FCEE21,#00A8C5,#D9E021);box-shadow:0 4px 15px 0 rgba(83,176,57,0.75);}.go-back-top-themes7{background-image:linear-gradient(to right,#6253e1,#852D91,#A3A1FF,#F24645);box-shadow:0 4px 15px 0 rgba(126,52,161,0.75);}.go-back-top-themes8{background-image:linear-gradient(to right,#29323c,#485563,#2b5876,#4e4376);box-shadow:0 4px 15px 0 rgba(45,54,65,0.75);}.go-back-top-themes9{background-image:linear-gradient(to right,#25aae1,#4481eb,#04befe,#3f86ed);box-shadow:0 4px 15px 0 rgba(65,132,234,0.75);}.go-back-top-themes10{background-image:linear-gradient(to right,#ed6ea0,#ec8c69,#f7186a,#FBB03B);box-shadow:0 4px 15px 0 rgba(236,116,149,0.75);}.go-back-top-themes11{background-image:linear-gradient(to right,#eb3941,#f15e64,#e14e53,#e2373f);box-shadow:0 5px 15px rgba(242,97,103,.4);}';
+      var style_el_btn = iframeDocument.createElement('style');
+      var style_node_btn = iframeDocument.createTextNode(style_text_btn);
+      style_el_btn.appendChild(style_node_btn);
+      iframeDocument.body.appendChild(style_el_btn);
+
       var div = document.createElement('div');
       div.setAttribute('id', this.el.replace('#', ''));
       var btn = document.createElement('button');
@@ -135,13 +156,16 @@
       var btn_name = document.createTextNode(this.text);
       btn.appendChild(btn_name);
       div.appendChild(btn);
-      document.body.appendChild(div);
-      this.btn = div;
+      iframeDocument.body.appendChild(div);
+      this.btn = btn;
       //创建结束 销毁已经没用的属性
       this.unsetUseless();
     },
     showBtn: function () {
       if (!this.show_flag) {
+        if (this.iframe) {
+          this.iframe.style.cssText = 'display:block';
+        }
         this.btn.style.cssText = 'display:block';
         this.hook(this.show);
         this.show_flag = true;
@@ -149,6 +173,9 @@
     },
     hideBtn: function () {
       if (this.show_flag) {
+        if (this.iframe) {
+          this.iframe.style.cssText = 'display:none';
+        }
         this.btn.style.cssText = 'display:none';
         this.hook(this.hide);
         this.show_flag = false;
@@ -319,7 +346,7 @@
       }
 
     },
-    
+
     //设置当前滚动所在高度
     setScrollTop: function (height) {
       //处理兼容性问题
