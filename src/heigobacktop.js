@@ -1,19 +1,26 @@
 /*
- * HeiGoBackTop.js V1.0.3
+ * HeiGoBackTop.js V1.0.5
  * @author hei-jack
  * @link https://github.com/hei-jack/HeiGoBackTop/
  * Probably the most beautiful back to top widget
  * 可能是最漂亮的返回顶部小插件
  * first: GMT2021-07-22
- * update: GMT2024-09-15
+ * update: GMT2025-03-08
  *
  */
 ; (function (global) {
   "use strict";
+
+  var instance;
   //构造函数
   function HeiGoBackTop(mode, el, speed, distance, smooth) {
+    if (instance) {
+      return instance;
+    }
+    instance = this;
     this.mode = mode === undefined ? 0 : mode;
     this.el = el === undefined ? '#__go-back-top' : el;
+    this.realScrollEle = null;
     this.iframe = null;
     this.speed = speed === undefined ? 500 : speed;
     this.distance = distance === undefined ? 100 : distance;
@@ -21,6 +28,8 @@
     this.show_height = 400;
     this.flag = false;
     this.show_flag = false;
+    this.first_scroll_flag = false;
+    this.find_scroll_ele_flag = false;
     this.width = '150px';
     this.height = '40px';
     this.bottom = '5%';
@@ -31,7 +40,7 @@
     this.themes = 0;
     this.color = 'linear-gradient(to right,#6966ff,#37e2d3,#63e8dd,#ccff66)';
     this.shadow = '0 4px 15px 0 rgba(41, 163, 163,0.75)';
-    this.version = 'V1.0.3';
+    this.version = 'V1.0.5';
     this.home = 'https://github.com/hei-jack/HeiGoBackTop/';
     //页面加载结束才进行初始化 没有必要执行实时载入
     this.onLoad(this);
@@ -68,6 +77,15 @@
     //初始化方法
     init: function () {
       this.showVersion();
+      var notHtmlOrBody = !this.isRealScrollHtmlOrBody();
+      // 先执行一次 获取html,body的可滚动距离
+      if (notHtmlOrBody) {
+        setTimeout(function () {
+          // 延迟3秒执行 可能为渐进时网站 需要读取api再渲染
+          // 不是html或body为实际滚动元素 则寻找实际滚动元素
+          this.realScrollEle = this.findMainScrollingElement();
+        }.bind(this), 3000);
+      }
       this.hook(this.beforeCreate);
       this.unset('onBeforeCreate', null);
       this.unset('beforeCreate');
@@ -81,8 +99,8 @@
       this.unset('createBtn', null);
       this.unset('unsetUseless', null);
       //绑定自定义鼠标滑动事件到全局滑动事件
-      this.bindOn(window, 'scroll', this.checkBtn);
-      this.bindOn(window, 'scroll', this.scroll);
+      this.bindOn(window, 'scroll', this.throttle(this.checkBtn.bind(this), 100), notHtmlOrBody);
+      this.bindOn(window, 'scroll', this.scroll, notHtmlOrBody);
       this.controller();
       this.unset('controller', null);
       this.hook(this.afterCreate);
@@ -91,7 +109,7 @@
       this.unset('bindOn', null);
       this.unset('addEventListener', null);
       this.unset('isBrowser', null);
-      this.unset('onLoad', null)
+      this.unset('onLoad', null);
     },
     //检查参数
     checkArgs: function () {
@@ -192,22 +210,52 @@
       this.scroll = func;
     },
     //绑定元素事件
-    bindOn: function (el, event, func) {
+    bindOn: function (el, event, func, useCapture) {
       if (func === undefined) return false;
-      this.addEventListener(el, event, func.bind(this))
+      this.addEventListener(el, event, func.bind(this), useCapture)
     },
     //获取页面滚动的距离
     getScrollTop: function () {
+      if (this.realScrollEle) {
+        return this.realScrollEle.scrollTop;
+      }
       return document.documentElement.scrollTop || document.body.scrollTop;
     },
     //检查按钮何时显示和隐藏
-    checkBtn: function () {
+    checkBtn: function (event) {
+      if (!this.isRealScrollHtmlOrBody()) {
+        if (!this.first_scroll_flag) {
+          // 在用户第一次滚动的时候再来获取一边真实滚动元素
+          this.realScrollEle = this.findMainScrollingElement();
+        }
+        if (!this.realScrollEle.isConnected) {
+          // 真实滚动旧元素已经被移除 则重新寻找
+          this.realScrollEle = this.findMainScrollingElement();
+        }
+        // 如果用户滚动的元素和旧的真实滚动元素不一致
+        if (event.target !== this.realScrollEle) {
+          /*
+          // 判断谁的区域更大
+          var targetRect = event.target.getBoundingClientRect();
+          var rect = this.realScrollEle.getBoundingClientRect();
+          // 宽度优先法则 理论上主要滚动区域宽度都会占主体比较多的区域 而侧边栏或者其他区域虽然也可以滚动 但是区域会更小
+          if (targetRect.width >= rect.width) {
+            //直接记录
+            this.realScrollEle = event.target;
+          }
+          */
+
+          // 滚动优先法则 用户滚动的是哪个区域 则点击按钮返回哪个区域的顶部
+          this.realScrollEle = event.target;
+        }
+      }
+      this.first_scroll_flag = true;
       this.getScrollTop() > this.show_height ? this.showBtn() : this.hideBtn();
     },
     //绑定元素事件兼容处理函数
-    addEventListener: function (el, type, fn) {
+    addEventListener: function (el, type, fn, useCapture) {
       if (el.addEventListener) {
-        el.addEventListener(type, fn, false);
+        el.addEventListener(type, fn, useCapture ? true : false);
       } else if (el.attachEvent) {
         el.attachEvent('on' + type, fn);
       } else {
@@ -317,6 +365,14 @@
       var startPosition = this.getScrollTop();
 
       try {
+        if (this.realScrollEle) {
+          this.realScrollEle.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+          return;
+        }
+
         //如果出现异常 说明不支持behavior: 'smooth'
         global.scrollTo({
           top: targetPosition,
@@ -331,7 +387,7 @@
           if (startTime === null) startTime = currentTime;
           var timeElapsed = currentTime - startTime;
           var run = ease(timeElapsed, startPosition, distance, duration);
-          global.scrollTo(0, run);
+          this.realScrollEle ? realScrollEle.scrollTop(0, run) : global.scrollTo(0, run);
           if (timeElapsed < duration) global.requestAnimationFrame(animation);
         }
 
@@ -349,11 +405,17 @@
 
     //设置当前滚动所在高度
     setScrollTop: function (height) {
+      if (this.realScrollEle) {
+        return this.realScrollEle.scrollTop = height;
+      }
       //处理兼容性问题
       document.documentElement.scrollTop ? document.documentElement.scrollTop = height : document.body.scrollTop = height;
     },
     //获取滚动条高度 即可滚动的高度
     getScrollHeight: function () {
+      if (this.realScrollEle) {
+        return this.realScrollEle.scrollHeight;
+      }
       //兼容标准模式 strict mode 和 混杂模式 quirks mode
       return document.compatMode === 'CSS1Compat' ? document.documentElement.scrollHeight : document.body.scrollHeight;
     },
@@ -386,6 +448,10 @@
     //获取当前滚动条所在位置到页面底部还剩多少距离
     getLast: function () {
       var margin_bot = 0;
+      if (this.realScrollEle) {
+        margin_bot = this.realScrollEle.scrollHeight - this.realScrollEle.scrollTop - this.realScrollEle.clientHeight;
+        return margin_bot;
+      }
       if (document.compatMode === "CSS1Compat") {
         margin_bot = document.documentElement.scrollHeight - (document.documentElement.scrollTop + document.body.scrollTop) - document.documentElement.clientHeight;
       } else {
@@ -425,6 +491,61 @@
     //获取当前运行环境是否为浏览器
     isBrowser: function () {
       return typeof (window) === "undefined" ? false : true;
+    },
+    // 寻找实际滚动的是哪个元素 部分网站 实际滚动的区域是其他元素 例如vue之类可能滚动的是app元素 很多ai聊天网站滚动的下面布局元素
+    findMainScrollingElement: function () {
+      if (this.find_scroll_ele_flag) {
+        return;
+      }
+      this.find_scroll_ele_flag = true;
+      var bestCandidate = null;
+      var maxArea = 0;
+      var queue = [document.body]; // 从 body 开始层级遍历
+      while (queue.length > 0) {
+        var node = queue.shift();
+        // 检查当前节点是否可滚动
+        if (node.scrollHeight > node.clientHeight && window.getComputedStyle(node).overflowY !== 'hidden') {
+          var rect = node.getBoundingClientRect();
+          var area = rect.width * rect.height;
+          // 选择可视区域最大的可滚动元素
+          if (area > maxArea) {
+            maxArea = area;
+            bestCandidate = node;
+          }
+        }
+        // 将子节点加入队列
+        var children = node.children;
+        for (let i = 0; i < children.length; i++) {
+          queue.push(children[i]);
+        }
+      }
+      this.find_scroll_ele_flag = false;
+      // 如果没有找到可滚动元素，则返回 documentElement
+      return bestCandidate || document.documentElement;
+    },
+    // 判断真实滚动元素是否为html或body
+    isRealScrollHtmlOrBody: function () {
+      return document.documentElement.clientHeight < document.documentElement.scrollHeight || document.body.clientHeight < document.body.scrollHeight
+    },
+    // 节流函数
+    throttle: function (func, wait) {
+      var timer = null;
+      var startTime = Date.now();
+      return function () {
+        var curTime = Date.now();
+        var remaining = wait - (curTime - startTime);
+        var context = this;
+        var args = arguments;
+        clearTimeout(timer);
+        if (remaining <= 0) {
+          func.apply(context, args);
+          startTime = Date.now();
+        } else {
+          timer = setTimeout(function () {
+            func.apply(context, args);
+          }, remaining);  // 如果小于wait 保证在差值时间后执行
+        }
+      }
     }
   };
   if (typeof module !== 'undefined' && module.exports) {
@@ -434,6 +555,9 @@
       return HeiGoBackTop;
     })
   } else {
-    global.HeiGoBackTop = HeiGoBackTop;
+    // 避免重复挂载
+    if (!global.HeiGoBackTop) {
+      global.HeiGoBackTop = HeiGoBackTop;
+    }
   }
 })(this);

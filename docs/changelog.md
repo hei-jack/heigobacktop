@@ -1,10 +1,14 @@
 # Changelog
 
+`GMT2025-03-08 V1.0.5`
+
+- Add support for sites that use dynamically manipulated dom (especially the current dominant ai big model sites).
+- Enable scroll-first rule for sites where the scrolling root element is not html or body: the area that is scrolled scrolls back to the top when the button is clicked.
+
 `GMT2025-03-07 V1.0.3`
 
 - iframe wrapper
 - top to bottom
-
 
 `GMT2024-09-15 V1.0.2`
 
